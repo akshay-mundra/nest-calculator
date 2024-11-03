@@ -1,34 +1,32 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete } from '@nestjs/common';
 import { OperationsService } from './operations.service';
 import { CreateOperationDto } from './dto/create-operation.dto';
-import { UpdateOperationDto } from './dto/update-operation.dto';
+import { UserEmail } from '../../decorators/user-email.decorator';
 
 @Controller('operations')
 export class OperationsController {
   constructor(private readonly operationsService: OperationsService) {}
 
   @Post()
-  create(@Body() createOperationDto: CreateOperationDto) {
-    return this.operationsService.create(createOperationDto);
+  create(
+    @UserEmail() email: string,
+    @Body() createOperationDto: CreateOperationDto,
+  ) {
+    return this.operationsService.create(email, createOperationDto);
   }
 
   @Get()
-  findAll() {
-    return this.operationsService.findAll();
+  findAll(@UserEmail() email: string) {
+    return this.operationsService.findAll(email);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.operationsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateOperationDto: UpdateOperationDto) {
-    return this.operationsService.update(+id, updateOperationDto);
+  @Delete('')
+  removeAll(@UserEmail() email: string) {
+    return this.operationsService.removeAll(email);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.operationsService.remove(+id);
+  remove(@UserEmail() email: string, @Param('id') id: string) {
+    return this.operationsService.remove(email, id);
   }
 }

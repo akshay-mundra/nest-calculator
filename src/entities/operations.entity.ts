@@ -17,6 +17,6 @@ export class Operation {
 	@Column()
 	result: number;
 
-	@Column({ nullable: false, unique: true })
+	@Column({ nullable: false })
 	email: string;
 }

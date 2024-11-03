@@ -37,7 +37,6 @@ export class CreateOperations1730608010803 implements MigrationInterface {
             name: 'email',
             type: 'varchar',
             isNullable: false,
-            isUnique: true,
           },
         ],
       }),
